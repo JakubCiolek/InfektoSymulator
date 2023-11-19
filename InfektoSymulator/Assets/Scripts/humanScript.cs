@@ -8,7 +8,7 @@ public class humanScript : MonoBehaviour
 {
 
     private float timer = 0f;
-    private float interval = 2f;
+    private float interval = 2f; //Random.Range(1,3);
     public NavMeshAgent agent;
     void Start()
     {
