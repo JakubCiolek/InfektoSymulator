@@ -18,8 +18,27 @@ public class interfaceScritp : MonoBehaviour
     public GameObject timeToExpose;
     public GameObject simDuration;
     public GameObject simSpeed;
+    public GameObject dayCounter;
+    public GameObject hourCounter;
+    private TMP_Text hourLabel;
+    private TMP_Text dayLabel;
+    public Clock clock;
+
+
     void Start()
     {
+        updateValueHints (procentInfected);
+        updateValueHints (population);
+        updateValueHints (populationImmunity);
+        updateValueHints (virusSpreadFactor);
+        updateValueHints (distanceToExpose);
+        updateValueHints (timeToExpose);
+        updateValueHints (simDuration);
+        updateValueHints (simSpeed);
+
+        hourLabel = hourCounter.GetComponentInChildren<TMP_Text>();
+        dayLabel = dayCounter.GetComponentInChildren<TMP_Text>();
+
         population.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {updateValueHints (population);});
         procentInfected.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {updateValueHints (procentInfected);});
         populationImmunity.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {updateValueHints (populationImmunity);});
@@ -33,6 +52,8 @@ public class interfaceScritp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdateDays();
+        UpdateHours();
     }
 
     public Dictionary<String, float> GetSimulationParameters()
@@ -46,7 +67,6 @@ public class interfaceScritp : MonoBehaviour
         simParameters["timeToExpose"] = timeToExpose.GetComponentInChildren<Slider>().value;
         simParameters["simulationDuration"] = simDuration.GetComponentInChildren<Slider>().value;
         simParameters["simulationSpeed"] = simSpeed.GetComponentInChildren<Slider>().value;
-        //TODO : read parameters and put them in dictionary.
         return simParameters;
     }
 
@@ -54,7 +74,24 @@ public class interfaceScritp : MonoBehaviour
     {
         var slider = sliderObject.GetComponentInChildren<Slider>();
         var textBox = sliderObject.GetComponentInChildren<TMP_Text>();
-        textBox.text = slider.value.ToString("F" + 2);
+        textBox.text = slider.value.ToString("F0");
     }
 
+    private void UpdateHours()
+    {
+        int minutes = clock.GetMinutes();
+        if(minutes >= 10)
+        {
+            hourLabel.text = clock.GetHour().ToString() +":"+minutes.ToString();
+        }
+        else
+        {
+            hourLabel.text = clock.GetHour().ToString() +":0"+minutes.ToString();
+        }
+    }
+
+    private void UpdateDays()
+    {
+        dayLabel.text = clock.GetDay().ToString();
+    }
 }

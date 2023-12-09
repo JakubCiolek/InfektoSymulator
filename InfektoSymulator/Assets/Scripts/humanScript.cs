@@ -53,16 +53,6 @@ public class humanScript : MonoBehaviour
         status = initialStatus;
         timeToInfection = choosenTimeToInfection;
     }
-    private Vector3 RandomNavmeshLocation(float radius) {
-        Vector3 randomDirection = Random.insideUnitCircle * radius;
-        randomDirection += transform.position;
-        NavMeshHit hit;
-        Vector3 finalPosition = Vector3.zero;
-        if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1)) {
-            finalPosition = hit.position;            
-        }
-        return finalPosition;
-    }
 
     private Vector3 RandomFloorLocation()
     {
@@ -105,7 +95,7 @@ public class humanScript : MonoBehaviour
            //Debug.Log("Czas trwania kontaktu: " + contactDuration);
             if (contactDuration > timeToInfection)
             {
-                Debug.Log("Status zmieniony na EXPOSED");
+                //Debug.Log("Status zmieniony na EXPOSED");
                 status = Status.EXPOSED;
                 body.color = Color.yellow;
             }
