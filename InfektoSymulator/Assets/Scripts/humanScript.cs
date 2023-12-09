@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 public class humanScript : MonoBehaviour
 {
@@ -19,18 +22,23 @@ public class humanScript : MonoBehaviour
     private float timeToInfection = 1f;
     private float timer = 0f;
     private float interval = 2f;
+    public InterfaceScritp simInterface;
+    public Clock clock;
     public NavMeshAgent agent;
-    Renderer floor;
-
+    public Renderer floor;
     public SpriteRenderer body;
+
     void Start()
     {
         checkStatus();
         floor =  GameObject.FindGameObjectWithTag("floor").GetComponent<Renderer>();
+        simInterface = GameObject.FindGameObjectWithTag("Interface").GetComponent<InterfaceScritp>();
+        clock = GetComponent<Clock>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         agent.SetDestination(RandomFloorLocation());
+        timeToInfection = simInterface.TimeToExpose;
     }
 
     void Update()
@@ -48,6 +56,10 @@ public class humanScript : MonoBehaviour
         }
     }
 
+    public void SetMoveSpeed(float newMoveSpeed)
+    {
+        agent.speed = newMoveSpeed;
+    }
     public void Initialize(Status initialStatus, float choosenTimeToInfection)
     {
         status = initialStatus;
@@ -58,8 +70,8 @@ public class humanScript : MonoBehaviour
     {
         Bounds floorBounds = floor.bounds;
 
-        float randomX = Random.Range(floorBounds.min.x, floorBounds.max.x);
-        float randomY = Random.Range(floorBounds.min.y, floorBounds.max.y);
+        float randomX = UnityEngine.Random.Range(floorBounds.min.x, floorBounds.max.x);
+        float randomY = UnityEngine.Random.Range(floorBounds.min.y, floorBounds.max.y);
 
         float randomZ = 0f;
 
@@ -90,14 +102,15 @@ public class humanScript : MonoBehaviour
         if(otherHuman.GetStatus() == Status.INFECTED && status==Status.HEALTHY)
         {
             timeExit = Time.time; // Włącz pomiar czasu wyjścia
-            //Debug.Log("Zakończono kontakt. timeExit: " + timeExit);
+
             float contactDuration = timeExit - timeEnter;
-           //Debug.Log("Czas trwania kontaktu: " + contactDuration);
+
             if (contactDuration > timeToInfection)
             {
                 //Debug.Log("Status zmieniony na EXPOSED");
                 status = Status.EXPOSED;
                 body.color = Color.yellow;
+                simInterface.IncreaseExposed();
             }
         }
     }

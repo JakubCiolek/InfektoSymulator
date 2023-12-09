@@ -2009,8 +2009,8 @@ Transform:
   m_GameObject: {fileID: 408017030}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.18, y: 0.96347, z: 0.059881903}
-  m_LocalScale: {x: 0.9125, y: 0.7875, z: 1}
+  m_LocalPosition: {x: -3.68, y: 0.96317, z: 0.059881903}
+  m_LocalScale: {x: 0.9284688, y: 0.81703126, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1675766677}
@@ -3921,6 +3921,7 @@ MonoBehaviour:
   dayCounter: {fileID: 934461269}
   hourCounter: {fileID: 323066739}
   clock: {fileID: 641551855}
+  spawner: {fileID: 1468883782}
 --- !u!1 &750840231
 GameObject:
   m_ObjectHideFlags: 0
@@ -6778,11 +6779,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223a1b3f330a5e646b3a0108e7502894, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  humanPrefab: {fileID: 7323627375715155375, guid: 80ed931551451e44f83ed7eeb0208188, type: 3}
+  humanPrefab: {fileID: 273159824244783182, guid: 80ed931551451e44f83ed7eeb0208188, type: 3}
   map: {fileID: 1695198347}
   x: 0.5
   y: 0.5
   populationSize: 30
+  infectedPopulationSize: 0
 --- !u!1 &1486028313
 GameObject:
   m_ObjectHideFlags: 0
@@ -6945,21 +6947,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1468883782}
-        m_TargetAssemblyTypeName: humanSpawner, Assembly-CSharp
+      - m_Target: {fileID: 711132340}
+        m_TargetAssemblyTypeName: interfaceScritp, Assembly-CSharp
         m_MethodName: SimulationStart
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 641551855}
-        m_TargetAssemblyTypeName: Clock, Assembly-CSharp
-        m_MethodName: StartClock
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

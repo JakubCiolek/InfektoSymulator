@@ -5,13 +5,18 @@ using UnityEngine;
 public class humanSpawner : MonoBehaviour
 {
 
-    public GameObject humanPrefab;
+    public humanScript humanPrefab;
     public Renderer map;
     // Start is called before the first frame update
     public float x;
     public float y;
 
     public int populationSize;
+
+    public int infectedPopulationSize;
+
+    private List<humanScript> humans;
+
     private Bounds objectBounds;
     private Vector3 bottomLeftCorner;
 
@@ -20,7 +25,7 @@ public class humanSpawner : MonoBehaviour
     {
         objectBounds = map.bounds;
 
-            // Pobierz lewy dolny róg granic
+        // Pobierz lewy dolny róg granic
         bottomLeftCorner = new Vector3(objectBounds.min.x + x, objectBounds.min.y + y, 0f);
     }
 
@@ -36,13 +41,20 @@ public class humanSpawner : MonoBehaviour
 
     IEnumerator SpawnHumansWithDelay()
     {
-        for (int i = 0; i < populationSize; i++)
+        for (int i = 0; i < populationSize-infectedPopulationSize; i++)
         {
             humanScript newHuman = Instantiate(humanPrefab, bottomLeftCorner, humanPrefab.transform.rotation).GetComponent<humanScript>();
             newHuman.Initialize(humanScript.Status.HEALTHY, choosenTimeToInfection);
+            //humans.Add(newHuman);
             yield return new WaitForSeconds(0.2f);
         }
-        humanScript infectedHuman = Instantiate(humanPrefab, bottomLeftCorner, humanPrefab.transform.rotation).GetComponent<humanScript>();
+
+        for (int i = 0; i < infectedPopulationSize; i++)
+        {
+            humanScript infectedHuman = Instantiate(humanPrefab, bottomLeftCorner, humanPrefab.transform.rotation).GetComponent<humanScript>();
             infectedHuman.Initialize(humanScript.Status.INFECTED, choosenTimeToInfection);
+            //humans.Add(infectedHuman);
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 }
