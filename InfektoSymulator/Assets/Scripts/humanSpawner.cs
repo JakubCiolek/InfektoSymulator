@@ -7,19 +7,16 @@ public class humanSpawner : MonoBehaviour
 
     public humanScript humanPrefab;
     public Renderer map;
-    // Start is called before the first frame update
     public float x;
     public float y;
-
     public int populationSize;
-
     public int infectedPopulationSize;
+    public List<humanScript> humans;
 
-    private List<humanScript> humans;
+    public Clock globalClock;
 
     private Bounds objectBounds;
     private Vector3 bottomLeftCorner;
-
     private float choosenTimeToInfection = 1f; //TODO : get from interface
     void Start()
     {
@@ -38,23 +35,23 @@ public class humanSpawner : MonoBehaviour
     {
         StartCoroutine(SpawnHumansWithDelay());
     }
-
     IEnumerator SpawnHumansWithDelay()
     {
         for (int i = 0; i < populationSize-infectedPopulationSize; i++)
         {
             humanScript newHuman = Instantiate(humanPrefab, bottomLeftCorner, humanPrefab.transform.rotation).GetComponent<humanScript>();
-            newHuman.Initialize(humanScript.Status.HEALTHY, choosenTimeToInfection);
-            //humans.Add(newHuman);
+            newHuman.Initialize(humanScript.Status.HEALTHY, choosenTimeToInfection, map.bounds, globalClock);
+            humans.Add(newHuman);
             yield return new WaitForSeconds(0.2f);
         }
 
         for (int i = 0; i < infectedPopulationSize; i++)
         {
             humanScript infectedHuman = Instantiate(humanPrefab, bottomLeftCorner, humanPrefab.transform.rotation).GetComponent<humanScript>();
-            infectedHuman.Initialize(humanScript.Status.INFECTED, choosenTimeToInfection);
-            //humans.Add(infectedHuman);
+            infectedHuman.Initialize(humanScript.Status.INFECTED, choosenTimeToInfection, map.bounds, globalClock);
+            humans.Add(infectedHuman);
             yield return new WaitForSeconds(0.2f);
         }
+        Debug.Log("humans array count " + humans.Count);
     }
 }

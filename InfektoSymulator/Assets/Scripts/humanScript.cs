@@ -25,20 +25,22 @@ public class humanScript : MonoBehaviour
     public InterfaceScritp simInterface;
     public Clock clock;
     public NavMeshAgent agent;
-    public Renderer floor;
+    public Bounds floorBounds;
     public SpriteRenderer body;
+    public SpriteRenderer range;
+    public CircleCollider2D infectionTrigger;
 
     void Start()
     {
         checkStatus();
-        floor =  GameObject.FindGameObjectWithTag("floor").GetComponent<Renderer>();
         simInterface = GameObject.FindGameObjectWithTag("Interface").GetComponent<InterfaceScritp>();
-        clock = GetComponent<Clock>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         agent.SetDestination(RandomFloorLocation());
         timeToInfection = simInterface.TimeToExpose;
+        ScaleSpriteToColliderRadius();
+        HideRange();
     }
 
     void Update()
@@ -60,16 +62,16 @@ public class humanScript : MonoBehaviour
     {
         agent.speed = newMoveSpeed;
     }
-    public void Initialize(Status initialStatus, float choosenTimeToInfection)
+    public void Initialize(Status initialStatus, float choosenTimeToInfection, Bounds floor, Clock globalClock)
     {
         status = initialStatus;
         timeToInfection = choosenTimeToInfection;
+        floorBounds = floor;
+        clock = globalClock;
     }
 
     private Vector3 RandomFloorLocation()
     {
-        Bounds floorBounds = floor.bounds;
-
         float randomX = UnityEngine.Random.Range(floorBounds.min.x, floorBounds.max.x);
         float randomY = UnityEngine.Random.Range(floorBounds.min.y, floorBounds.max.y);
 
@@ -84,8 +86,13 @@ public class humanScript : MonoBehaviour
         humanScript otherHuman = collider.GetComponent<humanScript>();
         if(otherHuman.GetStatus() == Status.INFECTED && status==Status.HEALTHY)
         {
+            ShowRange();
             timeEnter = Time.time; // Włącz pomiar czasu wejścia
             //Debug.Log("Zetknięto się z zarażonym. timeEnter: " + timeEnter);
+        }
+        if(status == Status.INFECTED && otherHuman.GetStatus() == Status.HEALTHY)
+        {
+            ShowRange();
         }
     }
 
@@ -113,6 +120,7 @@ public class humanScript : MonoBehaviour
                 simInterface.IncreaseExposed();
             }
         }
+        HideRange();
     }
 
     public Status GetStatus()
@@ -135,5 +143,25 @@ public class humanScript : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    void ScaleSpriteToColliderRadius()
+    {
+        // Pobierz aktualny rozmiar Collidera
+        float colliderRadius = infectionTrigger.radius;
+
+        // Ustaw nowy rozmiar sprite'a proporcjonalnie do rozmiaru Collidera
+        Vector3 newScale = new Vector3(2*colliderRadius, 2*colliderRadius, 1f);
+        range.transform.localScale = newScale;
+    }
+
+    void ShowRange()
+    {
+        range.color = new Color(range.color.r, range.color.g, range.color.b, 0.4f);
+    }
+
+    void HideRange()
+    {
+        range.color = new Color(range.color.r, range.color.g, range.color.b, 0.0f);
     }
 }
