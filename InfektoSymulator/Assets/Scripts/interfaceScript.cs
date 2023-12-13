@@ -18,20 +18,19 @@ public class InterfaceScritp : MonoBehaviour
     public GameObject timeToExpose;
     public GameObject simDuration;
     public GameObject simSpeed;
-    public GameObject dayCounter;
-    public GameObject hourCounter;
-    private TMP_Text hourLabel;
-    private TMP_Text dayLabel;
+    public TMP_Text hourLabel;
+    public TMP_Text dayLabel;
+    public TMP_Text ExposedLabel;
+    public TMP_Text InfectedLabel;
     public Clock clock;
     public humanSpawner spawner;
     private int exposed_counter = 0;
     private int infected_counter = 0;
-
     private bool simRunning = false;
 
-    public Dictionary<String, float> simParameters;
+    public Dictionary<string, float> simParameters;
 
-        public float Population
+    public float Population
     {
         get
         {
@@ -125,9 +124,6 @@ public class InterfaceScritp : MonoBehaviour
         UpdateValueHints (simDuration);
         UpdateValueHints (simSpeed);
 
-        hourLabel = hourCounter.GetComponentInChildren<TMP_Text>();
-        dayLabel = dayCounter.GetComponentInChildren<TMP_Text>();
-
         population.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (population);});
         procentInfected.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (procentInfected);});
         populationImmunity.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (populationImmunity);});
@@ -204,10 +200,12 @@ public class InterfaceScritp : MonoBehaviour
             if (infectedpop > 1)
             {
                 spawner.infectedPopulationSize = infectedpop;
+                InfectedLabel.text = infectedpop.ToString();
             }
             else
             {
                 spawner.infectedPopulationSize = 1;
+                InfectedLabel.text = "1";
             }
             spawner.SimulationStart();
             simRunning = true;
@@ -225,13 +223,20 @@ public class InterfaceScritp : MonoBehaviour
         // TODO
     }
 
+    public void SimulationRestart()
+    {
+        // TODO
+    }
+
     public void IncreaseExposed()
     {
         exposed_counter+=1;
+        ExposedLabel.text = exposed_counter.ToString();
     }
 
     public void IncreaseInfected()
     {
         infected_counter+=1;
+        InfectedLabel.text = infected_counter.ToString();
     }
 }

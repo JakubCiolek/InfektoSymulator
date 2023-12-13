@@ -12,12 +12,11 @@ public class humanSpawner : MonoBehaviour
     public int populationSize;
     public int infectedPopulationSize;
     public List<humanScript> humans;
-
     public Clock globalClock;
-
     private Bounds objectBounds;
     private Vector3 bottomLeftCorner;
-    private float choosenTimeToInfection = 1f; //TODO : get from interface
+    public InterfaceScritp simInterface;
+    private Dictionary<string, float> paramatersDict;
     void Start()
     {
         objectBounds = map.bounds;
@@ -33,6 +32,7 @@ public class humanSpawner : MonoBehaviour
     }
     public void SimulationStart()
     {
+        paramatersDict = simInterface.GetSimulationParameters();
         StartCoroutine(SpawnHumansWithDelay());
     }
     IEnumerator SpawnHumansWithDelay()
@@ -40,7 +40,7 @@ public class humanSpawner : MonoBehaviour
         for (int i = 0; i < populationSize-infectedPopulationSize; i++)
         {
             humanScript newHuman = Instantiate(humanPrefab, bottomLeftCorner, humanPrefab.transform.rotation).GetComponent<humanScript>();
-            newHuman.Initialize(humanScript.Status.HEALTHY, choosenTimeToInfection, map.bounds, globalClock);
+            newHuman.Initialize(humanScript.Status.HEALTHY, map.bounds, globalClock, paramatersDict);
             humans.Add(newHuman);
             yield return new WaitForSeconds(0.2f);
         }
@@ -48,7 +48,7 @@ public class humanSpawner : MonoBehaviour
         for (int i = 0; i < infectedPopulationSize; i++)
         {
             humanScript infectedHuman = Instantiate(humanPrefab, bottomLeftCorner, humanPrefab.transform.rotation).GetComponent<humanScript>();
-            infectedHuman.Initialize(humanScript.Status.INFECTED, choosenTimeToInfection, map.bounds, globalClock);
+            infectedHuman.Initialize(humanScript.Status.INFECTED, map.bounds, globalClock, paramatersDict);
             humans.Add(infectedHuman);
             yield return new WaitForSeconds(0.2f);
         }

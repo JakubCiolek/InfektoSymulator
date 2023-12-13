@@ -22,14 +22,18 @@ public class humanScript : MonoBehaviour
     private float timeToInfection = 1f;
     private float timer = 0f;
     private float interval = 2f;
-    public InterfaceScritp simInterface;
+    private int timeExposed;
+    private int infectionTime;
+    private int quarantineTime;
+
+    private float immunity = 0.0f;
     public Clock clock;
     public NavMeshAgent agent;
     public Bounds floorBounds;
     public SpriteRenderer body;
     public SpriteRenderer range;
     public CircleCollider2D infectionTrigger;
-
+    public InterfaceScritp simInterface;
     void Start()
     {
         checkStatus();
@@ -38,7 +42,6 @@ public class humanScript : MonoBehaviour
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         agent.SetDestination(RandomFloorLocation());
-        timeToInfection = simInterface.TimeToExpose;
         ScaleSpriteToColliderRadius();
         HideRange();
     }
@@ -62,12 +65,22 @@ public class humanScript : MonoBehaviour
     {
         agent.speed = newMoveSpeed;
     }
-    public void Initialize(Status initialStatus, float choosenTimeToInfection, Bounds floor, Clock globalClock)
+    public void Initialize(Status initialStatus, Bounds floor, Clock globalClock, Dictionary<string, float> simParameters)
     {
         status = initialStatus;
-        timeToInfection = choosenTimeToInfection;
+        timeToInfection = simParameters["timeToExpose"];
         floorBounds = floor;
         clock = globalClock;
+        infectionTrigger.radius = simParameters["distanceToExpose"];
+        immunity =  UnityEngine.Random.Range((int)simParameters["populationImmunity"]-20, (int)simParameters["populationImmunity"]+20)/100.0f;
+        if(immunity > 1.0f)
+        {
+            immunity = 1.0f;
+        }
+        else if(immunity < 0.0f)
+        {
+            immunity = 0.0f;
+        }
     }
 
     private Vector3 RandomFloorLocation()
@@ -117,6 +130,7 @@ public class humanScript : MonoBehaviour
                 //Debug.Log("Status zmieniony na EXPOSED");
                 status = Status.EXPOSED;
                 body.color = Color.yellow;
+                timeExposed = clock.GetHoursPassed();
                 simInterface.IncreaseExposed();
             }
         }
