@@ -18,6 +18,8 @@ public class InterfaceScritp : MonoBehaviour
     public GameObject timeToExpose;
     public GameObject simDuration;
     public GameObject simSpeed;
+    public GameObject maskProcentage;
+    public GameObject incubationPeriod;
     public TMP_Text hourLabel;
     public TMP_Text dayLabel;
     public TMP_Text ExposedLabel;

@@ -9,6 +9,10 @@ TagManager:
   - Interface
   - hint
   - human
+  - desk
+  - kitchenTop
+  - table
+  - sofa
   layers:
   - Default
   - TransparentFX

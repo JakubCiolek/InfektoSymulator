@@ -81,6 +81,7 @@ public class humanScript : MonoBehaviour
         {
             immunity = 0.0f;
         }
+        Debug.Log("timeToInfection "+timeToInfection);
     }
 
     private Vector3 RandomFloorLocation()
