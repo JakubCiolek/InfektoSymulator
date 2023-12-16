@@ -252,6 +252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 195f30fbe7c370741b8f10bfeff522fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  simSpeed: 0
   clock: {fileID: 0}
   agent: {fileID: 7578286539443266585}
   floorBounds:

@@ -6,14 +6,15 @@ public class Clock : MonoBehaviour
     private int hour = 8;
     private int hoursPassed = 0;
     private float minutesfloat = 0f;
-    private float timeScale = 1.0f;
+    private int realMinutes;
+    private float realSeconds;
     private bool isPaused = true;
 
     void Update()
     {
         if (!isPaused)
         {
-            float deltaTime = Time.deltaTime * timeScale;
+            float deltaTime = Time.deltaTime;
             UpdateSimulationTime(deltaTime);
 
             if (hoursPassed >= 24)
@@ -26,6 +27,7 @@ public class Clock : MonoBehaviour
     private void UpdateSimulationTime(float deltaTime)
     {
         minutesfloat += (deltaTime);
+        realSeconds += Time.unscaledDeltaTime;
 
         if (minutesfloat >= 60)
         {
@@ -39,15 +41,23 @@ public class Clock : MonoBehaviour
             }
         }
 
+        if (realSeconds >= 60)
+        {
+            realSeconds -= 60;
+            realMinutes += 1;
+        }
+
         hoursPassed += Mathf.RoundToInt(deltaTime);
     }
 
-    private void ResetSimulationTime()
+    public void ResetSimulationTime()
     {
         day = 1;
         hour = 8;
         minutesfloat = 0f;
         hoursPassed = 0;
+        realMinutes = 0;
+        realSeconds=0;
     }
 
     public int GetDay()
@@ -70,17 +80,21 @@ public class Clock : MonoBehaviour
         return hoursPassed;
     }
 
-    public void TogglePause()
+    public int GetRealSeconds()
     {
-        isPaused = !isPaused;
+        return (int)realSeconds;
+    }
+
+    public int GetRealMinutes()
+    {
+        return realMinutes;
+    }
+    public void Pause()
+    {
+        isPaused = true;
     }
     public void StartClock()
     {
         isPaused = false;
-    }
-
-    public void SetTimeScale(float newTimeScale)
-    {
-        timeScale = Mathf.Max(0.1f, newTimeScale);
     }
 }

@@ -22,6 +22,7 @@ public class InterfaceScritp : MonoBehaviour
     public GameObject incubationPeriod;
     public TMP_Text hourLabel;
     public TMP_Text dayLabel;
+    public TMP_Text realTimeLabel;
     public TMP_Text ExposedLabel;
     public TMP_Text InfectedLabel;
     public Clock clock;
@@ -29,6 +30,8 @@ public class InterfaceScritp : MonoBehaviour
     private int exposed_counter = 0;
     private int infected_counter = 0;
     private bool simRunning = false;
+
+    private bool pause = true;
 
     public Dictionary<string, float> simParameters;
 
@@ -125,6 +128,8 @@ public class InterfaceScritp : MonoBehaviour
         UpdateValueHints (timeToExpose);
         UpdateValueHints (simDuration);
         UpdateValueHints (simSpeed);
+        UpdateValueHints (maskProcentage);
+        UpdateValueHints (incubationPeriod);
 
         population.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (population);});
         procentInfected.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (procentInfected);});
@@ -133,6 +138,8 @@ public class InterfaceScritp : MonoBehaviour
         distanceToExpose.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (distanceToExpose);});
         timeToExpose.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (timeToExpose);});
         simDuration.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (simDuration);});
+        maskProcentage.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (maskProcentage);});
+        incubationPeriod.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (incubationPeriod);});
         simSpeed.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {setSimSpeed (simSpeed);}); // TODO dać tak żeby dało się zmieniać w trakcie symulacji
     }
 
@@ -153,6 +160,7 @@ public class InterfaceScritp : MonoBehaviour
         simParameters["distanceToExpose"] = distanceToExpose.GetComponentInChildren<Slider>().value;
         simParameters["timeToExpose"] = timeToExpose.GetComponentInChildren<Slider>().value;
         simParameters["simulationDuration"] = simDuration.GetComponentInChildren<Slider>().value;
+        simParameters["simulationSpeed"] = simSpeed.GetComponentInChildren<Slider>().value;
         return simParameters;
     }
 
@@ -168,7 +176,10 @@ public class InterfaceScritp : MonoBehaviour
         var slider = sliderObject.GetComponentInChildren<Slider>();
         var textBox = sliderObject.GetComponentInChildren<TMP_Text>();
         textBox.text = slider.value.ToString("F0");
-
+        if(!pause)
+        {
+            Time.timeScale = slider.value;
+        }
     }
 
     private void UpdateHours()
@@ -181,6 +192,16 @@ public class InterfaceScritp : MonoBehaviour
         else
         {
             hourLabel.text = clock.GetHour().ToString() +":0"+minutes.ToString();
+        }
+
+        int realSeconds = clock.GetRealSeconds();
+        if(realSeconds >= 10)
+        {
+            realTimeLabel.text = clock.GetRealMinutes().ToString() +":"+ realSeconds.ToString();
+        }
+        else
+        {
+            realTimeLabel.text = clock.GetRealMinutes().ToString() +":0"+ realSeconds.ToString();
         }
     }
 
@@ -212,22 +233,23 @@ public class InterfaceScritp : MonoBehaviour
             spawner.SimulationStart();
             simRunning = true;
         }
+        pause = false;
+        setSimSpeed(simSpeed);
+        clock.StartClock();
     }
-
-    public void SimulationStop()
-    {
-        simRunning = false;
-        // TODO
-    }
-
     public void SimulationPause()
     {
-        // TODO
+        Time.timeScale = 0f;
+        clock.Pause();
+        pause = true;
     }
 
     public void SimulationRestart()
     {
-        // TODO
+        clock.ResetSimulationTime();
+        clock.Pause();
+        spawner.deleteHumans();
+        simRunning = false;
     }
 
     public void IncreaseExposed()

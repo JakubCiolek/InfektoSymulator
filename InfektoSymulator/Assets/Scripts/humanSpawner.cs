@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class humanSpawner : MonoBehaviour
@@ -53,5 +54,14 @@ public class humanSpawner : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
         Debug.Log("humans array count " + humans.Count);
+    }
+
+    public void deleteHumans()
+    {
+        GameObject[] humansToDelete = GameObject.FindGameObjectsWithTag("human");
+        foreach(GameObject human in humansToDelete)
+        {
+            Destroy(human);
+        }
     }
 }

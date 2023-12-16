@@ -26,7 +26,11 @@ public class humanScript : MonoBehaviour
     private int infectionTime;
     private int quarantineTime;
 
+    
+
+
     private float immunity = 0.0f;
+    public float simSpeed;
     public Clock clock;
     public NavMeshAgent agent;
     public Bounds floorBounds;
@@ -81,6 +85,7 @@ public class humanScript : MonoBehaviour
         {
             immunity = 0.0f;
         }
+        SetSimSpeed(simParameters["simulationSpeed"]);
         Debug.Log("timeToInfection "+timeToInfection);
     }
 
@@ -178,5 +183,11 @@ public class humanScript : MonoBehaviour
     void HideRange()
     {
         range.color = new Color(range.color.r, range.color.g, range.color.b, 0.0f);
+    }
+
+    public void SetSimSpeed(float newSpeed)
+    {
+        simSpeed = newSpeed;
+        agent.speed = 1.5f * simSpeed;
     }
 }
