@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -10,6 +11,13 @@ public class humanScript : MonoBehaviour
         HEALTHY,
         EXPOSED,
         INFECTED
+    }
+    public enum Activity
+    {
+        WORK,
+        BREAK,
+        LUNCH,
+        GOING_HOME
     }
     private Status status;
     private float timeEnter;  // Czas wejścia do kolizji
@@ -34,7 +42,7 @@ public class humanScript : MonoBehaviour
     public InterfaceScritp simInterface;
     void Start()
     {
-        checkStatus();
+        CheckStatus();
         simInterface = GameObject.FindGameObjectWithTag("Interface").GetComponent<InterfaceScritp>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
@@ -104,6 +112,34 @@ public class humanScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
+        if (collider.CompareTag("human"))
+        {
+            HandleHumanTriggerEnter(collider);
+        }
+        else
+        {
+            //HandleOtherTriggerEnter(collider);
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D collider)
+    {
+    }
+
+    void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.CompareTag("human"))
+        {
+            HandleHumanTriggerExit(collider);
+        }
+        else
+        {
+            //HandleOtherTrigger(collider);
+        }
+    }
+
+    void HandleHumanTriggerEnter(Collider2D collider)
+    {
         humanScript otherHuman = collider.GetComponent<humanScript>();
         if(otherHuman.GetStatus() == Status.INFECTED && status==Status.HEALTHY)
         {
@@ -116,11 +152,7 @@ public class humanScript : MonoBehaviour
         }
     }
 
-    void OnTriggerStay2D(Collider2D collider)
-    {
-    }
-
-    void OnTriggerExit2D(Collider2D collider)
+    void HandleHumanTriggerExit(Collider2D collider)
     {
         humanScript otherHuman = collider.GetComponent<humanScript>();
         if(otherHuman.GetStatus() == Status.INFECTED && status==Status.HEALTHY)
@@ -133,7 +165,7 @@ public class humanScript : MonoBehaviour
             {
                 status = Status.EXPOSED;
                 body.color = Color.yellow;
-                timeExposed = clock.GetHoursPassed();
+                timeExposed = Mathf.RoundToInt(clock.GetHoursPassed());
                 simInterface.IncreaseExposed();
             }
         }
@@ -145,7 +177,7 @@ public class humanScript : MonoBehaviour
         return status;
     }
 
-    private void checkStatus()
+    private void CheckStatus()
     {
         switch(status){
             case Status.HEALTHY:

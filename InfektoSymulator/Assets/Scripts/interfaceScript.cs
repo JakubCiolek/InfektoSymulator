@@ -26,10 +26,11 @@ public class InterfaceScritp : MonoBehaviour
     public Clock clock;
     public humanSpawner spawner;
     public GameOver gameOver;
+    public SpriteRenderer night;
     private int exposed_counter = 0;
     private int infected_counter = 0;
     private bool simRunning = false;
-
+    private float timeScale;
     private bool pause = true;
 
     public Dictionary<string, float> simParameters;
@@ -119,6 +120,7 @@ public class InterfaceScritp : MonoBehaviour
     }
     void Start()
     {
+        night.color = new Color(night.color.r, night.color.g, night.color.b, 0.0f);
         gameOver.HideGameOverScreen();
         UpdateValueHints (procentInfected);
         UpdateValueHints (population);
@@ -151,6 +153,7 @@ public class InterfaceScritp : MonoBehaviour
             UpdateDays();
             UpdateHours();
             SimulationEnd();
+            NightTime();
         }
     }
 
@@ -181,9 +184,10 @@ public class InterfaceScritp : MonoBehaviour
         var slider = sliderObject.GetComponentInChildren<Slider>();
         var textBox = sliderObject.GetComponentInChildren<TMP_Text>();
         textBox.text = slider.value.ToString("F0");
+        timeScale = slider.value;
         if(!pause)
         {
-            Time.timeScale = slider.value;
+            Time.timeScale = timeScale;
         }
     }
 
@@ -257,6 +261,7 @@ public class InterfaceScritp : MonoBehaviour
         simRunning = false;
         InfectedLabel.text = "0";
         ExposedLabel.text = "0";
+        night.color = new Color(night.color.r, night.color.g, night.color.b, 0.0f);
     }
 
     public void IncreaseExposed()
@@ -279,6 +284,27 @@ public class InterfaceScritp : MonoBehaviour
             {
                 SimulationPause();
                 gameOver.ShowGameOverScreen( ExposedLabel.text, InfectedLabel.text, realTimeLabel.text);
+            }
+        }
+    }
+
+    private void NightTime()
+    {
+        int hour = clock.GetHour();
+        if(hour > 7 &&hour < 17)
+        {
+            night.color = new Color(night.color.r, night.color.g, night.color.b, 0.0f);
+            if(!pause)
+            {
+                Time.timeScale = timeScale;
+            }
+        }
+        else
+        {
+            night.color = new Color(night.color.r, night.color.g, night.color.b, 0.7f);
+            if(!pause)
+            {
+                Time.timeScale = 100.0f;
             }
         }
     }

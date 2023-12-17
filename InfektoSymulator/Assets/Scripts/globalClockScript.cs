@@ -4,7 +4,7 @@ public class Clock : MonoBehaviour
 {
     private int day = 1;
     private int hour = 8;
-    private int hoursPassed = 0;
+    private float hoursPassed = 0;
     private float minutesfloat = 0f;
     private int realMinutes = 0;
     private float realSeconds = 0;
@@ -16,11 +16,6 @@ public class Clock : MonoBehaviour
         {
             float deltaTime = Time.deltaTime;
             UpdateSimulationTime(deltaTime);
-
-            if (hoursPassed >= 24)
-            {
-                ResetSimulationTime();
-            }
         }
     }
 
@@ -47,7 +42,7 @@ public class Clock : MonoBehaviour
             realMinutes += 1;
         }
 
-        hoursPassed += Mathf.RoundToInt(deltaTime);
+        hoursPassed += deltaTime;
     }
 
     public void ResetSimulationTime()
@@ -75,7 +70,7 @@ public class Clock : MonoBehaviour
         return (int)minutesfloat;
     }
 
-    public int GetHoursPassed()
+    public float GetHoursPassed()
     {
         return hoursPassed;
     }
