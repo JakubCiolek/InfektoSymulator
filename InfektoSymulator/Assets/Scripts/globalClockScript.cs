@@ -6,8 +6,8 @@ public class Clock : MonoBehaviour
     private int hour = 8;
     private int hoursPassed = 0;
     private float minutesfloat = 0f;
-    private int realMinutes;
-    private float realSeconds;
+    private int realMinutes = 0;
+    private float realSeconds = 0;
     private bool isPaused = true;
 
     void Update()

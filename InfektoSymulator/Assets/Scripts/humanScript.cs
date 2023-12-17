@@ -1,11 +1,6 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
 
 public class humanScript : MonoBehaviour
 {
@@ -25,9 +20,7 @@ public class humanScript : MonoBehaviour
     private int timeExposed;
     private int infectionTime;
     private int quarantineTime;
-
-    
-
+    private bool maskOn;
 
     private float immunity = 0.0f;
     public float simSpeed;
@@ -36,6 +29,7 @@ public class humanScript : MonoBehaviour
     public Bounds floorBounds;
     public SpriteRenderer body;
     public SpriteRenderer range;
+    public SpriteRenderer mask;
     public CircleCollider2D infectionTrigger;
     public InterfaceScritp simInterface;
     void Start()
@@ -46,7 +40,6 @@ public class humanScript : MonoBehaviour
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         agent.SetDestination(RandomFloorLocation());
-        ScaleSpriteToColliderRadius();
         HideRange();
     }
 
@@ -84,9 +77,18 @@ public class humanScript : MonoBehaviour
         else if(immunity < 0.0f)
         {
             immunity = 0.0f;
+        };
+        int rand = UnityEngine.Random.Range(0, 100);
+        maskOn = rand < (int)simParameters["maskProcentage"];
+        if(maskOn)
+        {
+            ShowMask();
         }
-        SetSimSpeed(simParameters["simulationSpeed"]);
-        Debug.Log("timeToInfection "+timeToInfection);
+        else
+        {
+            HideMask();
+        }
+        ScaleSpriteToColliderRadius();
     }
 
     private Vector3 RandomFloorLocation()
@@ -106,8 +108,7 @@ public class humanScript : MonoBehaviour
         if(otherHuman.GetStatus() == Status.INFECTED && status==Status.HEALTHY)
         {
             ShowRange();
-            timeEnter = Time.time; // Włącz pomiar czasu wejścia
-            //Debug.Log("Zetknięto się z zarażonym. timeEnter: " + timeEnter);
+            timeEnter = Time.time;
         }
         if(status == Status.INFECTED && otherHuman.GetStatus() == Status.HEALTHY)
         {
@@ -115,25 +116,21 @@ public class humanScript : MonoBehaviour
         }
     }
 
-    // Gets called during the collision
     void OnTriggerStay2D(Collider2D collider)
     {
-        //Debug.Log("stay");
     }
 
-    // Gets called when the object exits the collision
     void OnTriggerExit2D(Collider2D collider)
     {
         humanScript otherHuman = collider.GetComponent<humanScript>();
         if(otherHuman.GetStatus() == Status.INFECTED && status==Status.HEALTHY)
         {
-            timeExit = Time.time; // Włącz pomiar czasu wyjścia
+            timeExit = Time.time;
 
             float contactDuration = timeExit - timeEnter;
 
             if (contactDuration > timeToInfection)
             {
-                //Debug.Log("Status zmieniony na EXPOSED");
                 status = Status.EXPOSED;
                 body.color = Color.yellow;
                 timeExposed = clock.GetHoursPassed();
@@ -185,9 +182,14 @@ public class humanScript : MonoBehaviour
         range.color = new Color(range.color.r, range.color.g, range.color.b, 0.0f);
     }
 
-    public void SetSimSpeed(float newSpeed)
+    void ShowMask()
     {
-        simSpeed = newSpeed;
-        agent.speed = 1.5f * simSpeed;
+        mask.color = new Color(mask.color.r, mask.color.g, mask.color.b, 1.0f);
+        infectionTrigger.radius *= 0.3f;
+    }
+
+    void HideMask()
+    {
+        mask.color = new Color(mask.color.r, mask.color.g, mask.color.b, 0.0f);
     }
 }

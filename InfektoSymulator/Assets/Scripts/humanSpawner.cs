@@ -8,8 +8,8 @@ public class humanSpawner : MonoBehaviour
 
     public humanScript humanPrefab;
     public Renderer map;
-    public float x;
-    public float y;
+    public float x = 0.5f;
+    public float y = 0.5f;
     public int populationSize;
     public int infectedPopulationSize;
     public List<humanScript> humans;
@@ -21,15 +21,12 @@ public class humanSpawner : MonoBehaviour
     void Start()
     {
         objectBounds = map.bounds;
-
-        // Pobierz lewy dolny róg granic
         bottomLeftCorner = new Vector3(objectBounds.min.x + x, objectBounds.min.y + y, 0f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
     public void SimulationStart()
     {
@@ -53,7 +50,6 @@ public class humanSpawner : MonoBehaviour
             humans.Add(infectedHuman);
             yield return new WaitForSeconds(0.2f);
         }
-        Debug.Log("humans array count " + humans.Count);
     }
 
     public void deleteHumans()

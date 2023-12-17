@@ -8,8 +8,6 @@ using UnityEngine.UI;
 
 public class InterfaceScritp : MonoBehaviour
 {
-    // Start is called before the first frame update
-
     public GameObject population;
     public GameObject procentInfected;
     public GameObject populationImmunity;
@@ -27,6 +25,7 @@ public class InterfaceScritp : MonoBehaviour
     public TMP_Text InfectedLabel;
     public Clock clock;
     public humanSpawner spawner;
+    public GameOver gameOver;
     private int exposed_counter = 0;
     private int infected_counter = 0;
     private bool simRunning = false;
@@ -120,6 +119,7 @@ public class InterfaceScritp : MonoBehaviour
     }
     void Start()
     {
+        gameOver.HideGameOverScreen();
         UpdateValueHints (procentInfected);
         UpdateValueHints (population);
         UpdateValueHints (populationImmunity);
@@ -140,14 +140,18 @@ public class InterfaceScritp : MonoBehaviour
         simDuration.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (simDuration);});
         maskProcentage.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (maskProcentage);});
         incubationPeriod.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (incubationPeriod);});
-        simSpeed.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {setSimSpeed (simSpeed);}); // TODO dać tak żeby dało się zmieniać w trakcie symulacji
+        simSpeed.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {setSimSpeed (simSpeed);});
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateDays();
-        UpdateHours();
+        if(simRunning)
+        {
+            UpdateDays();
+            UpdateHours();
+            SimulationEnd();
+        }
     }
 
     public Dictionary<String, float> GetSimulationParameters()
@@ -160,6 +164,7 @@ public class InterfaceScritp : MonoBehaviour
         simParameters["distanceToExpose"] = distanceToExpose.GetComponentInChildren<Slider>().value;
         simParameters["timeToExpose"] = timeToExpose.GetComponentInChildren<Slider>().value;
         simParameters["simulationDuration"] = simDuration.GetComponentInChildren<Slider>().value;
+        simParameters["maskProcentage"] = maskProcentage.GetComponentInChildren<Slider>().value;
         simParameters["simulationSpeed"] = simSpeed.GetComponentInChildren<Slider>().value;
         return simParameters;
     }
@@ -250,6 +255,8 @@ public class InterfaceScritp : MonoBehaviour
         clock.Pause();
         spawner.deleteHumans();
         simRunning = false;
+        InfectedLabel.text = "0";
+        ExposedLabel.text = "0";
     }
 
     public void IncreaseExposed()
@@ -262,5 +269,17 @@ public class InterfaceScritp : MonoBehaviour
     {
         infected_counter+=1;
         InfectedLabel.text = infected_counter.ToString();
+    }
+
+    private void SimulationEnd()
+    {
+        if(simParameters.ContainsKey("simulationDuration"))
+        {
+            if(clock.GetDay() >= simParameters["simulationDuration"]+1)
+            {
+                SimulationPause();
+                gameOver.ShowGameOverScreen( ExposedLabel.text, InfectedLabel.text, realTimeLabel.text);
+            }
+        }
     }
 }
