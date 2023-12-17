@@ -168,6 +168,7 @@ public class InterfaceScritp : MonoBehaviour
         simParameters["timeToExpose"] = timeToExpose.GetComponentInChildren<Slider>().value;
         simParameters["simulationDuration"] = simDuration.GetComponentInChildren<Slider>().value;
         simParameters["maskProcentage"] = maskProcentage.GetComponentInChildren<Slider>().value;
+        simParameters["incubationPeriod"] = incubationPeriod.GetComponentInChildren<Slider>().value;
         simParameters["simulationSpeed"] = simSpeed.GetComponentInChildren<Slider>().value;
         return simParameters;
     }
@@ -232,6 +233,7 @@ public class InterfaceScritp : MonoBehaviour
             if (infectedpop > 1)
             {
                 spawner.infectedPopulationSize = infectedpop;
+                infected_counter = infectedpop;
                 InfectedLabel.text = infectedpop.ToString();
             }
             else

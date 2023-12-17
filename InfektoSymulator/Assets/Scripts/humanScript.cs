@@ -17,6 +17,7 @@ public class humanScript : MonoBehaviour
         WORK,
         BREAK,
         LUNCH,
+        CONVERSATION,
         GOING_HOME
     }
     private Status status;
@@ -25,10 +26,13 @@ public class humanScript : MonoBehaviour
     private float timeToInfection = 1f;
     private float timer = 0f;
     private float interval = 2f;
-    private int timeExposed;
+    private float virusSpreadFactor;
+    private int incubationPeriod;
     private int infectionTime;
     private int quarantineTime;
     private bool maskOn;
+
+    private bool willBeInfected = false;
 
     private float immunity = 0.0f;
     public float simSpeed;
@@ -54,6 +58,14 @@ public class humanScript : MonoBehaviour
     void Update()
     {
         move();
+        if(status == Status.EXPOSED)
+        {
+            CheckInfection();
+        }
+        else if (status == Status.INFECTED)
+        {
+            CheckQuarantine();
+        }
     }
 
     void move()
@@ -77,6 +89,8 @@ public class humanScript : MonoBehaviour
         floorBounds = floor;
         clock = globalClock;
         infectionTrigger.radius = simParameters["distanceToExpose"];
+        virusSpreadFactor = simParameters["virusSpreadFactor"];
+        incubationPeriod = (int)simParameters["incubationPeriod"] * 24;
         immunity =  UnityEngine.Random.Range((int)simParameters["populationImmunity"]-20, (int)simParameters["populationImmunity"]+20)/100.0f;
         if(immunity > 1.0f)
         {
@@ -163,10 +177,14 @@ public class humanScript : MonoBehaviour
 
             if (contactDuration > timeToInfection)
             {
-                status = Status.EXPOSED;
-                body.color = Color.yellow;
-                timeExposed = Mathf.RoundToInt(clock.GetHoursPassed());
-                simInterface.IncreaseExposed();
+                int exposed = UnityEngine.Random.Range(0,100);
+                if(exposed < virusSpreadFactor)
+                {
+                    status = Status.EXPOSED;
+                    body.color = Color.yellow;
+                    simInterface.IncreaseExposed();
+                    CalculateInfection();
+                }
             }
         }
         HideRange();
@@ -188,6 +206,7 @@ public class humanScript : MonoBehaviour
                 break;
             case Status.INFECTED:
                 body.color = Color.red;
+                quarantineTime = 24;
                 break;
             default:
                 break;
@@ -223,5 +242,49 @@ public class humanScript : MonoBehaviour
     void HideMask()
     {
         mask.color = new Color(mask.color.r, mask.color.g, mask.color.b, 0.0f);
+    }
+    void CalculateInfection()
+    {
+        int infectionProbabilty = (int)((virusSpreadFactor/100.0f)*(1 - immunity)*100.0f);
+        int attempt = UnityEngine.Random.Range(1,100);
+        if(attempt < infectionProbabilty)
+        {
+            infectionTime = clock.GetHoursPassed() + UnityEngine.Random.Range(incubationPeriod-24, incubationPeriod+24);
+            willBeInfected = true;
+        }
+        else
+        {
+            infectionTime = clock.GetHoursPassed() + 24;
+            willBeInfected = false;
+        }
+    }
+    void CheckInfection()
+    {
+        if(clock.GetHoursPassed() == infectionTime)
+        {
+            if(willBeInfected)
+            {
+                Debug.Log("Infection Time");
+                status = Status.INFECTED;
+                body.color = Color.red;
+                simInterface.IncreaseInfected();
+                quarantineTime = clock.GetHoursPassed() + 24;
+            }
+            else
+            {
+                Debug.Log("healthy Time");
+                status = Status.HEALTHY;
+                body.color = Color.black;
+            }
+        }
+    }
+
+    void CheckQuarantine()
+    {
+        if(clock.GetHoursPassed() == quarantineTime)
+        {
+            // first go to exit then destroy
+            Destroy(gameObject);
+        }
     }
 }
