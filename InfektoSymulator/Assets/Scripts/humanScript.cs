@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Rendering.Universal.ShaderGraph;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.U2D;
 
 public class humanScript : MonoBehaviour
 {
@@ -14,26 +17,30 @@ public class humanScript : MonoBehaviour
     }
     public enum Activity
     {
-        WORK,
-        BREAK,
-        LUNCH,
-        CONVERSATION,
-        GOING_HOME
+        RANDOM_WALK = 0,
+        WORK = 1,
+        BREAK = 2,
+        LUNCH = 3,
+        CONVERSATION = 4,
+        IDLE = 5
     }
     private Status status;
+    private Activity activity;
     private float timeEnter;  // Czas wejścia do kolizji
     private float timeExit;   // Czas wyjścia z kolizji
     private float timeToInfection = 1f;
     private float timer = 0f;
     private float interval = 2f;
     private float virusSpreadFactor;
+    private float convDuration;
+    private float convEnd;
     private int incubationPeriod;
     private int infectionTime;
     private int quarantineTime;
+    private int beginWorkHour;
+    private int endWorkHour;
     private bool maskOn;
-
     private bool willBeInfected = false;
-
     private float immunity = 0.0f;
     public float simSpeed;
     public Clock clock;
@@ -42,22 +49,29 @@ public class humanScript : MonoBehaviour
     public SpriteRenderer body;
     public SpriteRenderer range;
     public SpriteRenderer mask;
+    public SpriteRenderer speechBubble;
     public CircleCollider2D infectionTrigger;
     public InterfaceScritp simInterface;
+    private bool isConversing = false;
+    private humanScript currentConvoHuman = null;
     void Start()
     {
         CheckStatus();
+        activity = Activity.RANDOM_WALK;
         simInterface = GameObject.FindGameObjectWithTag("Interface").GetComponent<InterfaceScritp>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         agent.SetDestination(RandomFloorLocation());
+        beginWorkHour = UnityEngine.Random.Range(8,11);
+        endWorkHour = UnityEngine.Random.Range(16,18);
+        HideSpeech();
         HideRange();
     }
 
     void Update()
     {
-        move();
+        HandleActivity();
         if(status == Status.EXPOSED)
         {
             CheckInfection();
@@ -66,9 +80,10 @@ public class humanScript : MonoBehaviour
         {
             CheckQuarantine();
         }
+        WorkNightCycle();
     }
 
-    void move()
+    void Move()
     {
         timer += Time.deltaTime;
         if (timer >= interval)
@@ -78,6 +93,79 @@ public class humanScript : MonoBehaviour
         }
     }
 
+    private void HandleActivity()
+    {
+        switch(activity)
+        {
+            case Activity.RANDOM_WALK:
+                    Move();
+                break;
+            case Activity.WORK:
+                    Work();
+                break;
+            case Activity.BREAK:
+                    Break();
+                break;
+            case Activity.LUNCH:
+                    Lunch();
+                break;
+            case Activity.CONVERSATION:
+                    EndConversation();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void WorkNightCycle()
+    {
+        if(simInterface.IsNight)
+        {
+            agent.ResetPath();
+            activity = Activity.IDLE;
+        }
+        else if(activity == Activity.IDLE) 
+        {
+            //activity = (humanScript.Activity)UnityEngine.Random.Range(0,4);
+            activity = Activity.RANDOM_WALK;
+        }
+    }
+
+    private void Work()
+    {
+
+    }
+    private void Break()
+    {
+        
+    }
+
+    private void Lunch()
+    {
+        
+    }
+
+    private void Conversation()
+    {
+        ShowSpeech();
+        activity = Activity.CONVERSATION;
+        agent.isStopped = true;
+        convDuration = Time.time;
+        convEnd = convDuration + UnityEngine.Random.Range(1,4);
+    }
+
+    private void EndConversation()
+    {
+        if(convEnd < convDuration)
+        {
+            agent.isStopped = false;
+            HideSpeech();
+            activity = Activity.RANDOM_WALK;
+            convEnd = 0.0f;
+            convDuration = 0.0f;
+        }
+        convDuration = Time.time;
+    }
     public void SetMoveSpeed(float newMoveSpeed)
     {
         agent.speed = newMoveSpeed;
@@ -146,20 +234,28 @@ public class humanScript : MonoBehaviour
         {
             HandleHumanTriggerExit(collider);
         }
-        else
-        {
-            //HandleOtherTrigger(collider);
-        }
     }
 
     void HandleHumanTriggerEnter(Collider2D collider)
     {
+        // int conversation = UnityEngine.Random.Range(0,2);
+        // if (conversation == 1 && isConversing == false)
+        // {
+        //     Conversation();
+        //     humanScript convoHuman = collider.GetComponent<humanScript>();
+        //     convoHuman.Conversation();
+        //     Debug.Log("blablabla");
+
+        //     isConversing = true;
+        //     currentConvoHuman = convoHuman;
+        // }
         humanScript otherHuman = collider.GetComponent<humanScript>();
         if(otherHuman.GetStatus() == Status.INFECTED && status==Status.HEALTHY)
         {
             ShowRange();
             timeEnter = Time.time;
         }
+
         if(status == Status.INFECTED && otherHuman.GetStatus() == Status.HEALTHY)
         {
             ShowRange();
@@ -168,6 +264,12 @@ public class humanScript : MonoBehaviour
 
     void HandleHumanTriggerExit(Collider2D collider)
     {
+        if (isConversing && currentConvoHuman == collider.GetComponent<humanScript>())
+        {
+            // Zakończ rozmowę lub wykonaj inne czynności
+            isConversing = false;
+            currentConvoHuman = null;
+        }
         humanScript otherHuman = collider.GetComponent<humanScript>();
         if(otherHuman.GetStatus() == Status.INFECTED && status==Status.HEALTHY)
         {
@@ -242,6 +344,17 @@ public class humanScript : MonoBehaviour
     void HideMask()
     {
         mask.color = new Color(mask.color.r, mask.color.g, mask.color.b, 0.0f);
+    }
+
+    void ShowSpeech()
+    {
+        speechBubble.color = new Color(speechBubble.color.r, speechBubble.color.g, speechBubble.color.b, 1.0f);
+        infectionTrigger.radius *= 0.3f;
+    }
+
+    void HideSpeech()
+    {
+        speechBubble.color = new Color(speechBubble.color.r, speechBubble.color.g, speechBubble.color.b, 0.0f);
     }
     void CalculateInfection()
     {

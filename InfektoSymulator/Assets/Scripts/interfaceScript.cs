@@ -33,6 +33,8 @@ public class InterfaceScritp : MonoBehaviour
     private float timeScale;
     private bool pause = true;
 
+    public bool IsNight = false;
+
     public Dictionary<string, float> simParameters;
 
     public float Population
@@ -293,12 +295,13 @@ public class InterfaceScritp : MonoBehaviour
     private void NightTime()
     {
         int hour = clock.GetHour();
-        if(hour > 7 &&hour < 17)
+        if(hour > 7 && hour < 17)
         {
             night.color = new Color(night.color.r, night.color.g, night.color.b, 0.0f);
             if(!pause)
             {
                 Time.timeScale = timeScale;
+                IsNight = false;
             }
         }
         else
@@ -307,6 +310,7 @@ public class InterfaceScritp : MonoBehaviour
             if(!pause)
             {
                 Time.timeScale = 100.0f;
+                IsNight = true;
             }
         }
     }
