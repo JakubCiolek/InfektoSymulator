@@ -18,6 +18,7 @@ public class humanSpawner : MonoBehaviour
     private Vector3 bottomLeftCorner;
     public InterfaceScritp simInterface;
     private Dictionary<string, float> paramatersDict;
+
     void Start()
     {
         objectBounds = map.bounds;
