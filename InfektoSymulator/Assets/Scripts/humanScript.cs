@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.U2D;
 using UnityEngine.UIElements;
-
+[System.Serializable]
 public class humanScript : MonoBehaviour
 {
 
@@ -27,14 +27,13 @@ public class humanScript : MonoBehaviour
         IDLE = 5
     }
     private Status status;
-    private Activity activity;
+    [SerializeField]private Activity activity;
     private float timeEnter;  // Czas wejścia do kolizji
     private float timeExit;   // Czas wyjścia z kolizji
     private float timeToInfection = 1f;
     private float timer = 0f;
     private float interval = 2f;
     private float virusSpreadFactor;
-    private float currentActivityStartTime;
     private float currentActivityEndTime;
     private int incubationPeriod;
     private int infectionTime;
@@ -42,7 +41,7 @@ public class humanScript : MonoBehaviour
     private bool maskOn;
     private bool willBeInfected = false;
     private float immunity = 0.0f;
-    public float simSpeed;
+    private float maskEffectivness = 1.0f;
     public Clock clock;
     public NavMeshAgent agent;
     public Bounds floorBounds;
@@ -52,16 +51,12 @@ public class humanScript : MonoBehaviour
     public SpriteRenderer speechBubble;
     public CircleCollider2D infectionTrigger;
     public InterfaceScritp simInterface;
-    private bool isConversing = false;
-    private humanScript currentConvoHuman = null;
     private GameObject[] desks;
-
     private GameObject[] sofas;
     private GameObject[] kitchenSeats;
-    private SeatScript currentSeat;
-    void Start()
-    {
-    }
+    [SerializeField]public SeatScript currentSeat;
+
+    private object seatReservationLock;
 
     void Update()
     {
@@ -74,7 +69,9 @@ public class humanScript : MonoBehaviour
         {
             CheckQuarantine();
         }
+
         WorkNightCycle();
+
         if(activity == Activity.RANDOM_WALK)
         {
             Move();
@@ -109,41 +106,44 @@ public class humanScript : MonoBehaviour
             HideMask();
             HideRange();
             HideSpeech();
+            ClearAllSeats();
+            //CheckAndMoveAgentToNavMesh();
+            currentSeat?.SetOccupation(false);
         }
         else if(activity == Activity.IDLE)
         {
-            activity = (humanScript.Activity)UnityEngine.Random.Range(0,4);
+            activity = (Activity)UnityEngine.Random.Range(0,4);
             body.color = new Color(body.color.r, body.color.g, body.color.b, 1.0f);
+            if(maskOn)
+            {
+                ShowMask();
+            }
+            StartActivity();
         }
     }
 
     private bool SearchSeat(GameObject[] seats)
     {
-        foreach(GameObject obj in seats)
+        lock(seatReservationLock)
         {
-            currentSeat = obj.GetComponent<SeatScript>();
-            if(!currentSeat.GetOccupation())
+            foreach(GameObject obj in seats)
             {
-                agent.SetDestination(currentSeat.GetSeatPosition());
-                currentSeat.SetOccupation(true);
-                currentActivityEndTime = clock.GetHour() + UnityEngine.Random.Range(1,3);
-                return true;
+                currentSeat = obj.GetComponent<SeatScript>();
+                if(currentSeat.GetOccupation() == false)
+                {
+                    currentSeat.SetOccupation(true);
+                    agent.SetDestination(currentSeat.GetSeatPosition());
+                    currentActivityEndTime = clock.GetHour() + UnityEngine.Random.Range(1,3);
+                    return true;
+                }
             }
         }
         return false;
     }
-
-    private void EndActivity()
-    {
-        if(currentActivityEndTime < clock.GetHour())
-        {
-            currentSeat.SetOccupation(false);
-            StartActivity();
-        }
-    }
-    void StartActivity()
+    private void StartActivity()
     {
         activity = (Activity)UnityEngine.Random.Range(0,4);
+        //currentSeat?.SetOccupation(false);
         bool seatFound = false;
         switch(activity)
         {
@@ -165,10 +165,20 @@ public class humanScript : MonoBehaviour
         }
     }
 
+    private void EndActivity()
+    {
+        if(currentActivityEndTime < clock.GetHour())
+        {
+            currentSeat?.SetOccupation(false);
+            StartActivity();
+        }
+    }
+
     private void Conversation()
     {
-        if(Time.time > 4.0f)
+        if(clock.GetHoursPassed() > 1)
         {
+            currentSeat?.SetOccupation(false);
             ShowSpeech();
             activity = Activity.CONVERSATION;
             agent.ResetPath();
@@ -184,9 +194,8 @@ public class humanScript : MonoBehaviour
             HideSpeech();
             StartActivity();
         }
-        currentActivityStartTime = Time.time;
     }
-    public void Initialize(Status initialStatus, Bounds floor, Clock globalClock, Dictionary<string, float> simParameters)
+    public void Initialize(Status initialStatus, Bounds floor, Clock globalClock, Dictionary<string, float> simParameters, object seatReservation)
     {
         status = initialStatus;
         timeToInfection = simParameters["timeToExpose"];
@@ -195,7 +204,10 @@ public class humanScript : MonoBehaviour
         infectionTrigger.radius = simParameters["distanceToExpose"];
         virusSpreadFactor = simParameters["virusSpreadFactor"];
         incubationPeriod = (int)simParameters["incubationPeriod"] * 24;
+        quarantineTime = (int)simParameters["quarantineTime"] * 24;
+        maskEffectivness = (100 - (int)simParameters["maskEffectivness"])/100.0f;
         immunity =  UnityEngine.Random.Range((int)simParameters["populationImmunity"]-20, (int)simParameters["populationImmunity"]+20)/100.0f;
+        seatReservationLock = seatReservation;
         if(immunity > 1.0f)
         {
             immunity = 1.0f;
@@ -204,7 +216,7 @@ public class humanScript : MonoBehaviour
         {
             immunity = 0.0f;
         };
-        int rand = UnityEngine.Random.Range(0, 25);
+        int rand = UnityEngine.Random.Range(0, 100);
         maskOn = rand < (int)simParameters["maskProcentage"];
         if(maskOn)
         {
@@ -260,7 +272,7 @@ public class humanScript : MonoBehaviour
         }
     }
 
-    void OnTriggerExit2D(Collider2D collider)
+    private void OnTriggerExit2D(Collider2D collider)
     {
         humanScript otherHuman = collider.GetComponent<humanScript>();
         if(otherHuman.GetStatus() == Status.INFECTED && status==Status.HEALTHY)
@@ -326,7 +338,7 @@ public class humanScript : MonoBehaviour
     void ShowMask()
     {
         mask.color = new Color(mask.color.r, mask.color.g, mask.color.b, 1.0f);
-        infectionTrigger.radius *= 0.3f;
+        infectionTrigger.radius *= maskEffectivness;
     }
 
     void HideMask()
@@ -345,7 +357,7 @@ public class humanScript : MonoBehaviour
     }
     void CalculateInfection()
     {
-        int infectionProbabilty = (int)((virusSpreadFactor/100.0f)*(1 - immunity)*100.0f);
+        int infectionProbabilty = (int)(virusSpreadFactor*(1 - immunity));// tu było troche inaczej wczeńsniej jak coś nie działa sprawdź tu
         int attempt = UnityEngine.Random.Range(1,100);
         if(attempt < infectionProbabilty)
         {
@@ -367,7 +379,7 @@ public class humanScript : MonoBehaviour
                 status = Status.INFECTED;
                 body.color = Color.red;
                 simInterface.IncreaseInfected();
-                quarantineTime = clock.GetHoursPassed() + 24;
+                quarantineTime = clock.GetHoursPassed() + UnityEngine.Random.Range(quarantineTime -24 , quarantineTime +24);
             }
             else
             {
@@ -382,6 +394,57 @@ public class humanScript : MonoBehaviour
         if(clock.GetHoursPassed() == quarantineTime)
         {
             Destroy(gameObject);
+        }
+    }
+
+    void ClearAllSeats()
+    {
+        foreach(GameObject obj in sofas)
+        {
+            currentSeat = obj.GetComponent<SeatScript>();
+            currentSeat.SetOccupation(false);
+        }
+        foreach(GameObject obj in kitchenSeats)
+        {
+            currentSeat = obj.GetComponent<SeatScript>();
+            currentSeat.SetOccupation(false);
+        }
+        foreach(GameObject obj in desks)
+        {
+            currentSeat = obj.GetComponent<SeatScript>();
+            currentSeat.SetOccupation(false);
+        }
+    }
+
+    void CheckAndMoveAgentToNavMesh()
+    {
+        if (agent != null && !IsAgentOnNavMesh())
+        {
+            MoveAgentToRandomNavMeshPosition();
+        }
+    }
+    bool IsAgentOnNavMesh()
+    {
+        NavMeshHit hit;
+        return NavMesh.SamplePosition(agent.transform.position, out hit, 0.1f, NavMesh.AllAreas);
+    }
+
+    void MoveAgentToRandomNavMeshPosition()
+    {
+        NavMeshHit hit;
+
+        // Losowa pozycja na NavMesh
+        Vector3 randomPosition = RandomFloorLocation();
+
+        // Spróbuj znaleźć pozycję na NavMesh wokół losowej pozycji
+        if (NavMesh.SamplePosition(randomPosition, out hit, 10f, NavMesh.AllAreas))
+        {
+            agent.Warp(hit.position);
+            Debug.Log("agent teleportowany");
+        }
+        else
+        {
+            Debug.LogWarning("Nie można znaleźć miejsca na NavMesh. Agent pozostanie w aktualnej pozycji.");
         }
     }
 }

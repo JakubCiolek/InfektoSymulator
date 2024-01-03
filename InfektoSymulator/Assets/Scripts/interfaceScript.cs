@@ -18,6 +18,8 @@ public class InterfaceScritp : MonoBehaviour
     public GameObject simSpeed;
     public GameObject maskProcentage;
     public GameObject incubationPeriod;
+    public GameObject maskEffectivness;
+    public GameObject quarantineTime;
     public TMP_Text hourLabel;
     public TMP_Text dayLabel;
     public TMP_Text realTimeLabel;
@@ -134,6 +136,8 @@ public class InterfaceScritp : MonoBehaviour
         UpdateValueHints (simSpeed);
         UpdateValueHints (maskProcentage);
         UpdateValueHints (incubationPeriod);
+        UpdateValueHints (maskEffectivness);
+        UpdateValueHints (quarantineTime);
 
         population.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (population);});
         procentInfected.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (procentInfected);});
@@ -144,6 +148,8 @@ public class InterfaceScritp : MonoBehaviour
         simDuration.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (simDuration);});
         maskProcentage.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (maskProcentage);});
         incubationPeriod.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (incubationPeriod);});
+        maskEffectivness.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (maskEffectivness);});
+        quarantineTime.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {UpdateValueHints (quarantineTime);});
         simSpeed.GetComponentInChildren<Slider>().onValueChanged.AddListener (delegate {setSimSpeed (simSpeed);});
     }
 
@@ -171,6 +177,8 @@ public class InterfaceScritp : MonoBehaviour
         simParameters["simulationDuration"] = simDuration.GetComponentInChildren<Slider>().value;
         simParameters["maskProcentage"] = maskProcentage.GetComponentInChildren<Slider>().value;
         simParameters["incubationPeriod"] = incubationPeriod.GetComponentInChildren<Slider>().value;
+        simParameters["quarantineTime"] = quarantineTime.GetComponentInChildren<Slider>().value;
+        simParameters["maskEffectivness"] = maskEffectivness.GetComponentInChildren<Slider>().value;
         simParameters["simulationSpeed"] = simSpeed.GetComponentInChildren<Slider>().value;
         return simParameters;
     }
@@ -229,6 +237,7 @@ public class InterfaceScritp : MonoBehaviour
             simParameters = GetSimulationParameters();
             infected_counter = 0;
             exposed_counter = 0;
+            spawner.restart = false;
             clock.StartClock();
             spawner.populationSize = (int)simParameters["population"];
             int infectedpop = (int)(simParameters["population"]*(simParameters["procentInfected"]/100.0f));
@@ -261,6 +270,7 @@ public class InterfaceScritp : MonoBehaviour
     {
         clock.ResetSimulationTime();
         clock.Pause();
+        spawner.restart = true;
         spawner.deleteHumans();
         simRunning = false;
         InfectedLabel.text = "0";
@@ -287,7 +297,8 @@ public class InterfaceScritp : MonoBehaviour
             if(clock.GetDay() >= simParameters["simulationDuration"]+1)
             {
                 SimulationPause();
-                gameOver.ShowGameOverScreen( ExposedLabel.text, InfectedLabel.text, realTimeLabel.text);
+                gameOver.ShowGameOverScreen( ExposedLabel.text, InfectedLabel.text, realTimeLabel.text, simParameters);
+                simRunning = false;
             }
         }
     }
