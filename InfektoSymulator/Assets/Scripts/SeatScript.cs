@@ -7,27 +7,31 @@ public class SeatScript : MonoBehaviour
     public Vector3 seatPosition;
 
     public SpriteRenderer seat;
-    public bool isOccupied;
+    public humanScript sittingHuman;
     void Start()
     {
-        isOccupied = false;
+        sittingHuman = null;
         seatPosition = new Vector3 (seat.transform.position.x, seat.transform.position.y, 0.0f);
     }
 
 
-    public bool GetOccupation()
+    public humanScript GetOccupation()
     {
-        return isOccupied;
+        return sittingHuman;
     }
 
-    public void SetOccupation(bool newOccupation)
+    public void ReserveSeat(humanScript newSittingHuman)
     {
-        isOccupied = newOccupation;
+        sittingHuman = newSittingHuman;
+    }
+
+    public void ReleaseSeat()
+    {
+        sittingHuman = null;
     }
 
     public Vector3 GetSeatPosition()
     {
-        isOccupied = true;
         return seatPosition;
     }
 }

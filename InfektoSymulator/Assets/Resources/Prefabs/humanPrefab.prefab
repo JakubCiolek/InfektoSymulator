@@ -422,7 +422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 195f30fbe7c370741b8f10bfeff522fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  simSpeed: 0
+  activity: 0
   clock: {fileID: 0}
   agent: {fileID: 7578286539443266585}
   floorBounds:
@@ -434,6 +434,7 @@ MonoBehaviour:
   speechBubble: {fileID: 5588915130837533224}
   infectionTrigger: {fileID: 7887756205069911806}
   simInterface: {fileID: 0}
+  currentSeat: {fileID: 0}
 --- !u!195 &7578286539443266585
 NavMeshAgent:
   m_ObjectHideFlags: 0

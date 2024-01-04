@@ -27,7 +27,7 @@ public class humanScript : MonoBehaviour
         IDLE = 5
     }
     private Status status;
-    [SerializeField]private Activity activity;
+    private Activity activity;
     private float timeEnter;  // Czas wejścia do kolizji
     private float timeExit;   // Czas wyjścia z kolizji
     private float timeToInfection = 1f;
@@ -54,9 +54,6 @@ public class humanScript : MonoBehaviour
     private GameObject[] desks;
     private GameObject[] sofas;
     private GameObject[] kitchenSeats;
-    [SerializeField]public SeatScript currentSeat;
-
-    private object seatReservationLock;
 
     void Update()
     {
@@ -107,8 +104,6 @@ public class humanScript : MonoBehaviour
             HideRange();
             HideSpeech();
             ClearAllSeats();
-            //CheckAndMoveAgentToNavMesh();
-            currentSeat?.SetOccupation(false);
         }
         else if(activity == Activity.IDLE)
         {
@@ -124,18 +119,15 @@ public class humanScript : MonoBehaviour
 
     private bool SearchSeat(GameObject[] seats)
     {
-        lock(seatReservationLock)
+        foreach(GameObject obj in seats)
         {
-            foreach(GameObject obj in seats)
+            SeatScript currentSeat = obj.GetComponent<SeatScript>();
+            if(currentSeat.GetOccupation() == null)
             {
-                currentSeat = obj.GetComponent<SeatScript>();
-                if(currentSeat.GetOccupation() == false)
-                {
-                    currentSeat.SetOccupation(true);
-                    agent.SetDestination(currentSeat.GetSeatPosition());
-                    currentActivityEndTime = clock.GetHour() + UnityEngine.Random.Range(1,3);
-                    return true;
-                }
+                currentSeat.ReserveSeat(this);
+                agent.SetDestination(currentSeat.GetSeatPosition());
+                currentActivityEndTime = clock.GetHour() + UnityEngine.Random.Range(1,3);
+                return true;
             }
         }
         return false;
@@ -169,7 +161,7 @@ public class humanScript : MonoBehaviour
     {
         if(currentActivityEndTime < clock.GetHour())
         {
-            currentSeat?.SetOccupation(false);
+            ReleaseSeat();
             StartActivity();
         }
     }
@@ -178,7 +170,6 @@ public class humanScript : MonoBehaviour
     {
         if(clock.GetHoursPassed() > 1)
         {
-            currentSeat?.SetOccupation(false);
             ShowSpeech();
             activity = Activity.CONVERSATION;
             agent.ResetPath();
@@ -195,7 +186,7 @@ public class humanScript : MonoBehaviour
             StartActivity();
         }
     }
-    public void Initialize(Status initialStatus, Bounds floor, Clock globalClock, Dictionary<string, float> simParameters, object seatReservation)
+    public void Initialize(Status initialStatus, Bounds floor, Clock globalClock, Dictionary<string, float> simParameters)
     {
         status = initialStatus;
         timeToInfection = simParameters["timeToExpose"];
@@ -207,7 +198,6 @@ public class humanScript : MonoBehaviour
         quarantineTime = (int)simParameters["quarantineTime"] * 24;
         maskEffectivness = (100 - (int)simParameters["maskEffectivness"])/100.0f;
         immunity =  UnityEngine.Random.Range((int)simParameters["populationImmunity"]-20, (int)simParameters["populationImmunity"]+20)/100.0f;
-        seatReservationLock = seatReservation;
         if(immunity > 1.0f)
         {
             immunity = 1.0f;
@@ -357,7 +347,7 @@ public class humanScript : MonoBehaviour
     }
     void CalculateInfection()
     {
-        int infectionProbabilty = (int)(virusSpreadFactor*(1 - immunity));// tu było troche inaczej wczeńsniej jak coś nie działa sprawdź tu
+        int infectionProbabilty = (int)(virusSpreadFactor*(1 - immunity));
         int attempt = UnityEngine.Random.Range(1,100);
         if(attempt < infectionProbabilty)
         {
@@ -399,52 +389,53 @@ public class humanScript : MonoBehaviour
 
     void ClearAllSeats()
     {
+        SeatScript seat;
         foreach(GameObject obj in sofas)
         {
-            currentSeat = obj.GetComponent<SeatScript>();
-            currentSeat.SetOccupation(false);
+            seat = obj.GetComponent<SeatScript>();
+            seat.ReleaseSeat();
         }
         foreach(GameObject obj in kitchenSeats)
         {
-            currentSeat = obj.GetComponent<SeatScript>();
-            currentSeat.SetOccupation(false);
+            seat = obj.GetComponent<SeatScript>();
+            seat.ReleaseSeat();
         }
         foreach(GameObject obj in desks)
         {
-            currentSeat = obj.GetComponent<SeatScript>();
-            currentSeat.SetOccupation(false);
+            seat = obj.GetComponent<SeatScript>();
+            seat.ReleaseSeat();
         }
     }
 
-    void CheckAndMoveAgentToNavMesh()
+    void ReleaseSeat()
     {
-        if (agent != null && !IsAgentOnNavMesh())
+        SeatScript seat;
+        foreach(GameObject obj in sofas)
         {
-            MoveAgentToRandomNavMeshPosition();
+            seat = obj.GetComponent<SeatScript>();
+            if(seat.GetOccupation() == this)
+            {
+                seat.ReleaseSeat();
+                break;
+            }
         }
-    }
-    bool IsAgentOnNavMesh()
-    {
-        NavMeshHit hit;
-        return NavMesh.SamplePosition(agent.transform.position, out hit, 0.1f, NavMesh.AllAreas);
-    }
-
-    void MoveAgentToRandomNavMeshPosition()
-    {
-        NavMeshHit hit;
-
-        // Losowa pozycja na NavMesh
-        Vector3 randomPosition = RandomFloorLocation();
-
-        // Spróbuj znaleźć pozycję na NavMesh wokół losowej pozycji
-        if (NavMesh.SamplePosition(randomPosition, out hit, 10f, NavMesh.AllAreas))
+        foreach(GameObject obj in kitchenSeats)
         {
-            agent.Warp(hit.position);
-            Debug.Log("agent teleportowany");
+            seat = obj.GetComponent<SeatScript>();
+            if(seat.GetOccupation() == this)
+            {
+                seat.ReleaseSeat();
+                break;
+            }
         }
-        else
+        foreach(GameObject obj in desks)
         {
-            Debug.LogWarning("Nie można znaleźć miejsca na NavMesh. Agent pozostanie w aktualnej pozycji.");
+            seat = obj.GetComponent<SeatScript>();
+            if(seat.GetOccupation() == this)
+            {
+                seat.ReleaseSeat();
+                break;
+            }
         }
     }
 }

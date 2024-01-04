@@ -21,8 +21,6 @@ public class humanSpawner : MonoBehaviour
     public InterfaceScritp simInterface;
     private Dictionary<string, float> paramatersDict;
 
-    private object seatReservationLock = new object();
-
     void Start()
     {
         objectBounds = map.bounds;
@@ -47,7 +45,7 @@ public class humanSpawner : MonoBehaviour
                 break;
             }
             humanScript newHuman = Instantiate(humanPrefab, bottomLeftCorner, humanPrefab.transform.rotation).GetComponent<humanScript>();
-            newHuman.Initialize(humanScript.Status.HEALTHY, map.bounds, globalClock, paramatersDict, seatReservationLock);
+            newHuman.Initialize(humanScript.Status.HEALTHY, map.bounds, globalClock, paramatersDict);
             humans.Add(newHuman);
             yield return new WaitForSeconds(0.2f);
         }
@@ -59,7 +57,7 @@ public class humanSpawner : MonoBehaviour
                 break;
             }
             humanScript infectedHuman = Instantiate(humanPrefab, bottomLeftCorner, humanPrefab.transform.rotation).GetComponent<humanScript>();
-            infectedHuman.Initialize(humanScript.Status.INFECTED, map.bounds, globalClock, paramatersDict, seatReservationLock);
+            infectedHuman.Initialize(humanScript.Status.INFECTED, map.bounds, globalClock, paramatersDict);
             humans.Add(infectedHuman);
             yield return new WaitForSeconds(0.2f);
         }
