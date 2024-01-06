@@ -26,11 +26,6 @@ public class humanSpawner : MonoBehaviour
         objectBounds = map.bounds;
         bottomLeftCorner = new Vector3(objectBounds.min.x + x, objectBounds.min.y + y, 0f);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
     public void SimulationStart()
     {
         paramatersDict = simInterface.GetSimulationParameters();

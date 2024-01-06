@@ -26,17 +26,17 @@ public class GameOver : MonoBehaviour
         ExposedLabel.text = exposed;
         InfectedLabel.text = infected;
         gameObject.SetActive(true);
-        population.text = population.text +" "+paramatersDict["population"].ToString("0.00");
-        procentInfected.text = procentInfected.text +" "+paramatersDict["procentInfected"].ToString("0.00") + " %";
-        populationImmunity.text = populationImmunity.text +" "+paramatersDict["populationImmunity"].ToString("0.00") + " %";
-        virusSpreadFactor.text = virusSpreadFactor.text +" "+paramatersDict["virusSpreadFactor"].ToString("0.00");
-        distanceToExpose.text = distanceToExpose.text +" "+paramatersDict["distanceToExpose"].ToString("0.00")+ " m";
-        timeToExpose.text = timeToExpose.text +" "+paramatersDict["timeToExpose"].ToString("0.00")+ " min";
-        simulationDuration.text = simulationDuration.text +" "+paramatersDict["simulationDuration"].ToString("0.00") + " dni";
-        maskProcentage.text = maskProcentage.text +" "+paramatersDict["maskProcentage"].ToString("0.00")+ " %";
-        incubationPeriod.text = incubationPeriod.text +" "+paramatersDict["incubationPeriod"].ToString("0.00") + " dni";
-        quarantineTime.text = quarantineTime.text +" "+paramatersDict["quarantineTime"].ToString("0.00") + " dni";
-        maskEffectivness.text = maskEffectivness.text +" "+paramatersDict["maskEffectivness"].ToString("0.00") + " %";
+        population.text = "Populacja: "+ paramatersDict["population"].ToString("0.00");
+        procentInfected.text =  "Procent zarażonych: "+paramatersDict["procentInfected"].ToString("0.00") + " %";
+        populationImmunity.text = "Odporność populacji: "+paramatersDict["populationImmunity"].ToString("0.00") + " %";
+        virusSpreadFactor.text = "Zarażalność patogenu: "+paramatersDict["virusSpreadFactor"].ToString("0.00");
+        distanceToExpose.text = "Dystans do zarażenia: "+paramatersDict["distanceToExpose"].ToString("0.00")+ " m";
+        timeToExpose.text = "Czas do zarażenia: "+paramatersDict["timeToExpose"].ToString("0.00")+ " min";
+        simulationDuration.text = "Długośc symulacji: "+paramatersDict["simulationDuration"].ToString("0.00") + " dni";
+        maskProcentage.text = "Procent w maseczkach: "+paramatersDict["maskProcentage"].ToString("0.00")+ " %";
+        incubationPeriod.text = "Średni okres inkubacji: "+paramatersDict["incubationPeriod"].ToString("0.00") + " dni";
+        quarantineTime.text = "Średni czas wykrycia: "+paramatersDict["quarantineTime"].ToString("0.00") + " dni";
+        maskEffectivness.text = "Skuteczność maseczek: "+paramatersDict["maskEffectivness"].ToString("0.00") + " %";
     }
 
     public void HideGameOverScreen()

@@ -135,7 +135,6 @@ public class humanScript : MonoBehaviour
     private void StartActivity()
     {
         activity = (Activity)UnityEngine.Random.Range(0,4);
-        //currentSeat?.SetOccupation(false);
         bool seatFound = false;
         switch(activity)
         {

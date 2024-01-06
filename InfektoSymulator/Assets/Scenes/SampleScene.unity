@@ -172,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1066420205}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1429316
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 235631242}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &2262449
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -1034,7 +1034,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 241940937}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &21204913
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -1152,7 +1152,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1581727109}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &22883223
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -1270,7 +1270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 2100185146}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &23549052
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -2326,7 +2326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 67757597}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &84492320
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -3048,7 +3048,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 652373187}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &126981233
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -3166,7 +3166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 878544960}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &136016555
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -3986,7 +3986,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 36507288}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &173383791
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -4347,7 +4347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1359354006}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &193732515
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -4465,7 +4465,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1630879783}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &199728056
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -5049,7 +5049,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1743657742}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &252153329
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -5413,7 +5413,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 121460543}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &295356139
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -5531,7 +5531,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1808047765}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &306398836
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -5686,7 +5686,7 @@ MonoBehaviour:
   m_MinValue: 1
   m_MaxValue: 10
   m_WholeNumbers: 1
-  m_Value: 1
+  m_Value: 2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -6069,7 +6069,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1899677955}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &340823326
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -6431,7 +6431,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1297571355}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!1 &357912061
 GameObject:
   m_ObjectHideFlags: 0
@@ -6481,7 +6481,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 609906157}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &357912064
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -6599,7 +6599,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 804367348}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &368632904
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -6997,7 +6997,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 70
   m_WholeNumbers: 1
-  m_Value: 7
+  m_Value: 30
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -7050,7 +7050,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1304461280}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &401881468
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -7428,7 +7428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1322649862}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &432416264
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -7546,7 +7546,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1981000721}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &453445715
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -7664,7 +7664,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1040331996}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &455715493
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -7854,7 +7854,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1322938389}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &475164484
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -8008,7 +8008,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 905429592}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &489237734
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -8845,7 +8845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 498428634}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &527923011
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -9223,7 +9223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 114722438}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &564592885
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -9341,7 +9341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1507841608}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &569703982
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -9534,7 +9534,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1879852200}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &579959931
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -9686,7 +9686,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 219652909}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &583967021
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -10131,7 +10131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 97935738}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &598574320
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -10487,7 +10487,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 119756552}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &616925757
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -10837,7 +10837,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1643809036}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &630828586
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -11519,7 +11519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1587025987}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &666678164
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -11637,7 +11637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1630243751}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &669042272
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -13082,7 +13082,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1334627386}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &758980828
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -13200,7 +13200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 514224159}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &780047820
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -13969,7 +13969,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1708285336}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &826813438
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -14642,7 +14642,7 @@ MonoBehaviour:
   m_MinValue: 1
   m_MaxValue: 50
   m_WholeNumbers: 1
-  m_Value: 5
+  m_Value: 10
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -15548,7 +15548,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 261683186}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &949350280
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -16018,7 +16018,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1230992961}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &983998503
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -16539,7 +16539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1012139987}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1018679011
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -17351,7 +17351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 163381039}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1068839061
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -17559,7 +17559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1810716156}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1076769306
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -17677,7 +17677,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1056523347}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1082786155
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -17795,7 +17795,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1266809036}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1085814579
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -18084,7 +18084,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1744292721}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1126071721
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -18336,7 +18336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 2014273888}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1135150890
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -18454,7 +18454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1831477430}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1149426105
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -18740,7 +18740,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1478583394}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1156035364
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -19212,7 +19212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 2111954320}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1196185240
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -19927,7 +19927,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 550642822}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1221746226
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -20215,7 +20215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1957418330}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1230820681
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -20417,7 +20417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1271460627}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1233025459
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -20535,7 +20535,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1890740770}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1241166890
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -20653,7 +20653,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1918777842}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1259826204
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -20771,7 +20771,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 512934718}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1264076820
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -20973,7 +20973,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1387727106}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1267610423
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -21091,7 +21091,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 598123366}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1270736526
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -21377,7 +21377,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1191466475}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1277162004
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -22208,7 +22208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1512838336}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1305620924
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -22326,7 +22326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 881989526}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1311619280
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -22444,7 +22444,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1153851844}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1311882969
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -22598,7 +22598,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 189326740}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1314721802
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -22716,7 +22716,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 703407233}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1315263557
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -22952,7 +22952,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1515004342}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1322696873
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -23263,7 +23263,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1717067794}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1334030882
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -23767,7 +23767,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1275150570}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1361217596
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -24309,7 +24309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 896747037}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1390810809
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -24495,7 +24495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 820176287}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1413570698
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -25060,7 +25060,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1190180625}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1461737451
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -25391,7 +25391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 957869159}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1485511961
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -25588,7 +25588,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 797262505}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1489719282
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -26789,7 +26789,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 415704656}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1539566737
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -26907,7 +26907,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 33229365}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1559591308
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -27100,7 +27100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 914564898}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1570328402
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -27754,7 +27754,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 656682376}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1617379633
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -27956,7 +27956,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1154298383}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1625296292
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -28469,7 +28469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1898333987}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1639418159
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -29133,7 +29133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 709198401}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1703098053
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -29772,7 +29772,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1638850477}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1764888065
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -29926,7 +29926,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1288410953}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1771477176
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -30300,7 +30300,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1705503058}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1778432709
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -30418,7 +30418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1491380171}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1779097118
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -30536,7 +30536,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1501004813}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1781271097
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -30788,7 +30788,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 827473349}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1797992163
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -31248,7 +31248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1048224706}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1815866717
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -31366,7 +31366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 820436094}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1818586147
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -31484,7 +31484,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 588483109}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1826027587
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -31920,7 +31920,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 507189009}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1849476984
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -32076,7 +32076,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1778072754}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1878557189
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -32278,7 +32278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1619746191}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1886189878
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -32780,7 +32780,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 2075833078}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1915446613
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -33266,7 +33266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1691212927}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1941505183
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -33579,7 +33579,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1197461216}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1961046881
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -34077,7 +34077,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 832330135}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1987474635
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -34195,7 +34195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 189408061}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &1994376632
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -34397,7 +34397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1805380323}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &2002526268
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -34599,7 +34599,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 590331004}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &2019579050
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -34717,7 +34717,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1454998387}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &2021142819
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -34910,7 +34910,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 139164612}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &2024578758
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -35028,7 +35028,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1847343289}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &2041508137
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -35221,7 +35221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 337261875}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &2074303453
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -35557,7 +35557,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 652175902}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &2080143621
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -35959,7 +35959,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1962354888}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &2089662851
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -36077,7 +36077,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1338657219}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &2091396194
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -36195,7 +36195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1596579215}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &2095181176
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -36705,7 +36705,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 681231524}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &2117076908
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -36924,7 +36924,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1007353636}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &2129191692
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -37042,7 +37042,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatPosition: {x: 0, y: 0, z: 0}
   seat: {fileID: 1997394356}
-  isOccupied: 0
+  sittingHuman: {fileID: 0}
 --- !u!208 &2139273036
 NavMeshObstacle:
   m_ObjectHideFlags: 0
