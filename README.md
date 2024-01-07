@@ -18,6 +18,10 @@ Features
     Integration of a modified mathematical simulation model and agent-based approach.
     User-friendly and intuitive visual interface.
 
+Download Links
+
+    https://github.com/JakubCiolek/InfektoSymulator/releases/latest
+
 System Requirements
 
     Operating System: Windows.
